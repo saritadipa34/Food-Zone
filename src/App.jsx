@@ -2,10 +2,20 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const [data,setData]=useState([]);
-  const[filteredData,setFilteredData]=useState(null)
+  const [data, setData]=useState([]);
+  const[filteredData, setFilteredData]=useState(null);
+  const[selected, setSelected]=useState('All');
   
-const DATA_URL='http://localhost:9000/'
+const DATA_URL='http://localhost:9000/';
+const handleBtn=(category)=>{
+setSelected(category);
+if(category === 'All'){
+  setFilteredData(data);
+}else{
+const filtered=data.filter((item)=>item.type.toLowerCase() === category.toLowerCase());
+  setFilteredData(filtered)
+}
+}
 
 const inputChange=(e)=>{
   const searchValue=e.target.value;
@@ -15,7 +25,6 @@ const inputChange=(e)=>{
  console.log(filtered);
  setFilteredData(filtered);
   };
-
 
 useEffect(()=>{
   const fetchData=async()=>{
@@ -66,7 +75,6 @@ catch(error){
   </Card>
 ))}
 </CardContainer>
-
    </Container>
   ) 
 }
@@ -142,6 +150,4 @@ border:'1px solid white',
 
 const Des=styled.p`
 margin:10px;
-
 `
-const SearchResult=styled.div``
